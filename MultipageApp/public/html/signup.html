@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <link rel="stylesheet" href="/signupstyle" />
+    <link rel="stylesheet" href="/style" />
+    
+</head>
+<body>
+    <nav>
+     
+        <a href="/about">About Us</a>
+        <a href="/contact">Contact Us</a>
+        <a href=/login>Login</a>
+        <a href="/signup">Signup</a>
+      </nav>
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form action="#" method="post" id="form">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+
+            <label for="mobileNumber">Mobile Number:</label>
+            <input type="tel" id="mobileNumber" name="mobileNumber" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <div class="gender-container">
+                <span class="gender-label">Gender:</span>
+                <div class="gender-options">
+                    <div class="gender-option">
+                        <input type="radio" id="male" name="gender" value="male" required>
+                        <label for="male">Male</label>
+                    </div>
+                    <div class="gender-option">
+                        <input type="radio" id="female" name="gender" value="female" required>
+                        <label for="female">Female</label>
+                    </div>
+                    <div class="gender-option">
+                        <input type="radio" id="other" name="gender" value="other" required>
+                        <label for="other">Other</label>
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" value="Register">
+        </form>
+    </div>
+</body>
+</html>
+
+<script>
+    let form = document.getElementById("form");
+    let userDetails = {}
+    form.addEventListener("input",(event)=>{
+        let value = event.target.value;
+        let name = event.target.name;
+        userDetails [name] = value;
+        console.log(userDetails)
+    })
+
+    form.addEventListener("submit",(event)=>{
+     event.preventDefault();
+     const {firstName,lastName,mobileNumber,email,password,dob,gender} = userDetails
+     if(firstName && lastName && mobileNumber && email && password && dob && gender){
+fetch("/newuser",{
+    method:"POST",
+    headers:{"content-type":"application/json"},
+    body:JSON.stringify(userDetails)
+}).then(data=>data.json()).then(data=>console.log(data)).catch(err=>console.log(err))
+     }else{
+        alert("Fill out all the fields before subbmitting")
+     }
+    })
+</script>
